@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            /* Center the container horizontally */
+            max-width: 800px;
+            /* Set a maximum width for responsiveness */
+        }
+
+        .logo {
+            text-align: center;
+        }
+
+        img {
+            width: 400px;
+            height: 200px;
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2e8b57;
+            /* Green */
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            /* Make labels bolder for better readability */
+        }
+
+        input[type="text"],
+        input[type="submit"],
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            /* Light Gray */
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            background-color: #2e8b57;
+            /* Green */
+            color: #fff;
+            /* White */
+            cursor: pointer;
+            padding: 15px 20px;
+            /* Increase button size for better click target */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            /* Add space between heading and table */
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 15px;
+            /* Increase cell padding for better spacing */
+            border: 1px solid #ddd;
+            /* Light Gray */
+        }
+
+        th {
+            background-color: #f5f5f5;
+            color: #333;
+            /* Black */
+        }
+
+        tr:nth-child(even) {
+            background-color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://www.supportwarehouse.com/wp-content/uploads/2020/09/HPE-Unveils-Its-New-Converged-IoT-1.jpg"
+                alt="Company Logo" width="400" height="200" />
+        </div>
+        <h1>GREENLAKE SERVICES</h1>
+
+        <form method="POST" action="/form">
+
+
+            <label for="service">Select Service:</label>
+            <select name="service" id="service">
+                <option value="networking_prime">Networking Service - Prime</option>
+                <option value="networking_non_prime">Networking Service - Non Prime</option>
+                <option value="cloud_prime">Private Cloud Enterprise Service - Prime</option>
+                <option value="cloud_non_prime">Private Cloud Enterprise Service - Non Prime</option>
+                <option value="storage_prime">Block Storage Service - Prime</option>
+                <option value="storage_non_prime">Block Storage Service - Non Prime</option>
+            </select>
+
+            <input type="submit" value="Submit" />
+        </form>
+
+        <h2>Available Services</h2>
+        <table>
+            <tr>
+                <th>Greenlake Services</th>
+                <th>Membership Status</th>
+                <th>Service ID</th>
+            </tr>
+            <tr>
+                <td>Networking Service</td>
+                <td>Prime</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>Networking Service</td>
+                <td>Non Prime</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>Private Cloud Enterprise Service</td>
+                <td>Prime</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>Private Cloud Enterprise Service</td>
+                <td>Non Prime</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>Block Storage Service</td>
+                <td>Prime</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>Block Storage Service</td>
+                <td>Non Prime</td>
+                <td>6</td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

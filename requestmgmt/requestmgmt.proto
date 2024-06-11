@@ -1,0 +1,20 @@
+syntax ="proto3";
+
+package requestmgmt;
+
+    option go_package ="github.com/rudra1ghosh/HPE-Internship/project;project";
+
+service RequestManagement{
+    rpc CreateRequest (NewRequest) returns (Request){}
+}
+
+message NewRequest{
+    string Wid =1;
+    string Rid =2 ;
+    int32 Id=3;
+}
+
+message Request{
+    string Wid =1;
+    
+}

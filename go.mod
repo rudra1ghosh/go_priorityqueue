@@ -3,11 +3,15 @@ module github.com/rudra1ghosh/HPE-Internship/project
 go 1.21.6
 
 require (
+	github.com/brianvoe/gofakeit/v6 v6.28.0
+	github.com/gorilla/websocket v1.5.2
 	github.com/spf13/viper v1.19.0
 	github.com/uber-go/tally v3.5.10+incompatible
 	go.uber.org/cadence v1.2.9
 	go.uber.org/yarpc v1.73.0
 	go.uber.org/zap v1.27.0
+	google.golang.org/grpc v1.62.1
+	google.golang.org/protobuf v1.33.0
 )
 
 require (
@@ -68,8 +72,6 @@ require (
 	golang.org/x/tools v0.13.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240314234333-6e1732d8331c // indirect
-	google.golang.org/grpc v1.62.1 // indirect
-	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
