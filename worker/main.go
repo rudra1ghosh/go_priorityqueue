@@ -19,7 +19,7 @@ import (
 )
 
 const cadenceCLIImage = "ubercadence/cli:master"
-const cadenceAddress = "host.docker.internal:8088"
+const cadenceAddress = "host.docker.internal:7933"
 const domain = "day56-domain"
 const taskList = "Service_process"
 const taskList2 = "Service2_process"

@@ -86,7 +86,7 @@ func (b *WorkflowClientBuilder) build() error {
 	}
 
 	b.Logger.Debug("Creating RPC dispatcher outbound",
-		zap.String("ServiceName", _cadenceFrontendService),
+		zap.String("ServiceName", "cadence-frontend"),
 		zap.String("HostPort", b.hostPort))
 
 	b.dispatcher = yarpc.NewDispatcher(yarpc.Config{
