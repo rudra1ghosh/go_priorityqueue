@@ -14,6 +14,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
+	"go.uber.org/cadence"
 	"go.uber.org/cadence/activity"
 
 	"go.uber.org/cadence/workflow"
@@ -38,10 +39,28 @@ func init() {
 }
 
 func CustomerWorkflow2(ctx workflow.Context, id int) error {
+
+	retryPolicy := &cadence.RetryPolicy{
+		InitialInterval:    time.Second,
+		BackoffCoefficient: 2,
+		MaximumInterval:    time.Minute * 5,
+		ExpirationInterval: time.Minute * 10,
+		MaximumAttempts:    5,
+	}
+	currentState := "started Worklfow"
+	err_c := workflow.SetQueryHandler(ctx, "current_state", func() (string, error) {
+		return currentState, nil
+	})
+	if err_c != nil {
+		currentState = "failed to register query handler"
+		return err_c
+	}
+
 	ao := workflow.ActivityOptions{
 		ScheduleToStartTimeout: time.Minute * 60,
 		StartToCloseTimeout:    time.Minute * 60,
 		HeartbeatTimeout:       time.Minute * 60,
+		RetryPolicy:            retryPolicy,
 	}
 	ctx = workflow.WithActivityOptions(ctx, ao)
 
@@ -50,38 +69,44 @@ func CustomerWorkflow2(ctx workflow.Context, id int) error {
 	rid := workflow.GetInfo(ctx).WorkflowExecution.RunID
 
 	logger := workflow.GetLogger(ctx)
+
 	logger.Info("Customer workflow started")
 	var Result string
 
 	err2 := workflow.ExecuteActivity(ctx, validateUser, wid).Get(ctx, &Result)
+	currentState = "Validate User"
 	if err2 != nil {
 		logger.Error("Validate User Failed", zap.Error(err2))
 		return err2
 	}
 	err3 := workflow.ExecuteActivity(ctx, subscriptionDetails, wid).Get(ctx, &Result)
+	currentState = "Getting Subscription Details"
 	if err3 != nil {
 		logger.Error("Subscription Failed", zap.Error(err3))
 		return err3
 	}
 
 	err := workflow.ExecuteActivity(ctx, Activity3, wid, rid, id).Get(ctx, &Result)
+	currentState = "Enqueuing Activtiy"
 	if err != nil {
 		logger.Error("Activity failed.", zap.Error(err))
 		return err
 	}
 
 	err1 := workflow.ExecuteActivity(ctx, wait, wid).Get(ctx, &Result)
+	currentState = "Waiting for signal"
 	if err1 != nil {
 		logger.Error("Activity wait failed.", zap.Error(err1))
 		return err1
 	}
 
 	err4 := workflow.ExecuteActivity(ctx, blockStorage, wid).Get(ctx, &Result)
+	currentState = "Block Storage Granted"
 	if err4 != nil {
 		logger.Error("Activity failed.", zap.Error(err4))
 		return err4
 	}
-
+	currentState = "Workflow completed"
 	logger.Info("Workflow completed.", zap.String("Result", Result))
 
 	return nil

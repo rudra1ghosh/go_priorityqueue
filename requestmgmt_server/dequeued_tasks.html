@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Dequeued Tasks</title>
+    <style>
+        body {
+            font-family: Montserrat, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .navbar {
+            background-color: #333;
+            margin-top: 10px; 
+            margin-bottom: 20px;
+            overflow: hidden;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            width: 60%;
+            color: white;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            z-index: 1;
+        }
+        .navbar a:hover {
+            background-color: #555;
+        }
+        .navbar a.active {
+            background-color: #4CAF50;
+        }
+        .navbar h1 {
+            flex-grow: 1;
+            text-align: center;
+            margin: 0;
+            margin-left: -90px; /* Adjust this value to move the title */
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a id="home-link" href="http://localhost:8080/form.html">Home</a>
+        <h1>QUEUE PROGRESS</h1>
+    </div>
+    
+    <h2>Networking Service</h2>
+    <table>
+        <tr>
+            <th>WorkFlow ID</th>
+            <th>Priority</th>
+        </tr>
+        {{range .NetworkingTasks}}
+        <tr>
+            <td>{{.WorkID}}</td>
+            <td>{{isPrimePriority .PriorityID}}</td>
+        </tr>
+        {{end}}
+    </table>
+    
+    <h2>Private Cloud Enterprise Service</h2>
+    <table>
+        <tr>
+            <th>Workflow ID</th>
+            <th>Priority</th>
+        </tr>
+        {{range .CloudEnterpriseTasks}}
+        <tr>
+            <td>{{.WorkID}}</td>
+            <td>{{isPrimePriority .PriorityID}}</td>
+        </tr>
+        {{end}}
+    </table>
+    
+    <h2>Block Storage Service</h2>
+    <table>
+        <tr>
+            <th>Workflow ID</th>
+            <th>Priority</th>
+        </tr>
+        {{range .BlockStorageTasks}}
+        <tr>
+            <td>{{.WorkID}}</td>
+            <td>{{isPrimePriority .PriorityID}}</td>
+        </tr>
+        {{end}}
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const currentLocation = window.location.href;
+            const homeLink = document.getElementById("home-link");
+          
+            if (currentLocation.includes("form.html")) {
+                homeLink.classList.add("active");
+            }
+        });
+    </script>
+</body>
+</html>
