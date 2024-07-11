@@ -18,6 +18,7 @@ const domain = "day56-domain"
 type RequestBody struct {
 	WorkID     string `json:"work_id"`
 	PriorityID int    `json:"p_id"`
+	Flag       int
 }
 type progress struct {
 	wid string

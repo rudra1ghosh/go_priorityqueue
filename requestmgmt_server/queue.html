@@ -5,7 +5,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <title>Request Status</title>
+    <title>Queue Status</title>
     <style>
         body {
             font-family: Montserrat, sans-serif;
@@ -40,7 +40,7 @@
         }
         .navbar {
             background-color: #333;
-            margin-top: 10px; 
+            margin-top: 10px;
             margin-bottom: 20px;
             overflow: hidden;
             border-radius: 20px;
@@ -71,58 +71,37 @@
             margin-left: -90px;
         }
     </style>
-    <script>
-        setInterval(() => {
-            location.reload();
-        }, 3000);
-    </script>
 </head>
 <body>
     <div class="navbar">
         <a id="home-link" href="http://localhost:8080/form.html">Home</a>
-        <h1>REQUEST STATUS</h1>
+        <h1>QUEUE STATUS</h1>
     </div>
     <table>
-        <tr>
-            <th>Serial No</th>
-            <th>Service Name</th>
-            <th>WorkFlow ID</th>
-            <th>Priority</th>
-            <th>Enqueued Timestamp</th>
-            <th>Dequeued Timestamp</th>
-        </tr>
-        {{range $index, $task := .NetworkingTasks}}
-        <tr>
-            <td>{{$index}}</td>
-            <td>Data Protection Service</td>
-            <td>{{$task.WorkID}}</td>
-            <td>{{isPrimePriority $task.PriorityID}}</td>
-            <td>{{$task.EnTimestamp}}</td>
-            <td>{{$task.DeTimestamp}}</td>
-        </tr>
-        {{end}}
-
-        {{range $index, $task := .CloudEnterpriseTasks}}
-        <tr>
-            <td>{{$index}}</td>
-            <td>Cloud Deployment Service</td>
-            <td>{{$task.WorkID}}</td>
-            <td>{{isPrimePriority $task.PriorityID}}</td>
-            <td>{{$task.EnTimestamp}}</td>
-            <td>{{$task.DeTimestamp}}</td>
-        </tr>
-        {{end}}
-
-        {{range $index, $task := .BlockStorageTasks}}
-        <tr>
-            <td>{{$index}}</td>
-            <td>Virtual Machine Service</td>
-            <td>{{$task.WorkID}}</td>
-            <td>{{isPrimePriority $task.PriorityID}}</td>
-            <td>{{$task.EnTimestamp}}</td>
-            <td>{{$task.DeTimestamp}}</td>
-        </tr>
-        {{end}}
+        <thead>
+            <tr>
+                <th>Work ID</th>
+                <th>Request ID</th>
+                <th>Priority</th>
+                <th>Updated Priority</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ if .Customers }}
+                {{ range .Customers }}
+                    <tr>
+                        <td>{{ .Wid }}</td>
+                        <td>{{ .Rid }}</td>
+                        <td>{{ isPrimePriority .Priority }}</td>
+                        <td>{{ flagStatus .Flag }}</td>
+                    </tr>
+                {{ end }}
+            {{ else }}
+                <tr>
+                    <td colspan="6">No customers in the queue.</td>
+                </tr>
+            {{ end }}
+        </tbody>
     </table>
 </body>
 </html>

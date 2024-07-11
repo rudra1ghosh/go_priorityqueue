@@ -52,7 +52,7 @@ func CustomerWorkflow(ctx workflow.Context, id int) error {
 		MaximumAttempts:    5,
 	}
 
-	currentState := "started Worklfow"
+	currentState := "Started Workflow"
 	err := workflow.SetQueryHandler(ctx, "current_state", func() (string, error) {
 		return currentState, nil
 	})
@@ -116,7 +116,7 @@ func CustomerWorkflow(ctx workflow.Context, id int) error {
 			return err3
 		}
 		logger.Info("Workflow completed.", zap.String("Result", Result))
-		currentState = "Completed "
+		currentState = "Workflow Completed"
 		return nil
 	}
 
@@ -156,7 +156,7 @@ func CustomerWorkflow(ctx workflow.Context, id int) error {
 			logger.Error("Subscription Failed", zap.Error(err3))
 			return err3
 		}
-		currentState = "Workflow completetd "
+		currentState = "Workflow Completed"
 		logger.Info("Workflow completed.", zap.String("Result", Result))
 
 		return nil

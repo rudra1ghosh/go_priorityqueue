@@ -5,7 +5,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <title>Request Status</title>
+    <title>Waiting Requests</title>
     <style>
         body {
             font-family: Montserrat, sans-serif;
@@ -71,58 +71,64 @@
             margin-left: -90px;
         }
     </style>
-    <script>
-        setInterval(() => {
-            location.reload();
-        }, 3000);
-    </script>
 </head>
 <body>
     <div class="navbar">
         <a id="home-link" href="http://localhost:8080/form.html">Home</a>
-        <h1>REQUEST STATUS</h1>
+        <h1>QUEUE PROGRESS</h1>
     </div>
+    <h1>ENQUEUED TASK PROGRESS</h1>
+    <h2>Networking Service</h2>
     <table>
         <tr>
-            <th>Serial No</th>
-            <th>Service Name</th>
             <th>WorkFlow ID</th>
             <th>Priority</th>
-            <th>Enqueued Timestamp</th>
-            <th>Dequeued Timestamp</th>
         </tr>
-        {{range $index, $task := .NetworkingTasks}}
+        {{range .NetworkingTasks}}
         <tr>
-            <td>{{$index}}</td>
-            <td>Data Protection Service</td>
-            <td>{{$task.WorkID}}</td>
-            <td>{{isPrimePriority $task.PriorityID}}</td>
-            <td>{{$task.EnTimestamp}}</td>
-            <td>{{$task.DeTimestamp}}</td>
-        </tr>
-        {{end}}
-
-        {{range $index, $task := .CloudEnterpriseTasks}}
-        <tr>
-            <td>{{$index}}</td>
-            <td>Cloud Deployment Service</td>
-            <td>{{$task.WorkID}}</td>
-            <td>{{isPrimePriority $task.PriorityID}}</td>
-            <td>{{$task.EnTimestamp}}</td>
-            <td>{{$task.DeTimestamp}}</td>
-        </tr>
-        {{end}}
-
-        {{range $index, $task := .BlockStorageTasks}}
-        <tr>
-            <td>{{$index}}</td>
-            <td>Virtual Machine Service</td>
-            <td>{{$task.WorkID}}</td>
-            <td>{{isPrimePriority $task.PriorityID}}</td>
-            <td>{{$task.EnTimestamp}}</td>
-            <td>{{$task.DeTimestamp}}</td>
+            <td>{{.WorkID}}</td>
+            <td>{{isPrimePriority .PriorityID}}</td>
         </tr>
         {{end}}
     </table>
+    
+    <h2>Private Cloud Enterprise Service</h2>
+    <table>
+        <tr>
+            <th>Workflow ID</th>
+            <th>Priority</th>
+        </tr>
+        {{range .CloudEnterpriseTasks}}
+        <tr>
+            <td>{{.WorkID}}</td>
+            <td>{{isPrimePriority .PriorityID}}</td>
+        </tr>
+        {{end}}
+    </table>
+    
+    <h2>Block Storage Service</h2>
+    <table>
+        <tr>
+            <th>Workflow ID</th>
+            <th>Priority</th>
+        </tr>
+        {{range .BlockStorageTasks}}
+        <tr>
+            <td>{{.WorkID}}</td>
+            <td>{{isPrimePriority .PriorityID}}</td>
+        </tr>
+        {{end}}
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const currentLocation = window.location.href;
+            const homeLink = document.getElementById("home-link");
+          
+            if (currentLocation.includes("form.html")) {
+                homeLink.classList.add("active");
+            }
+        });
+    </script>
 </body>
 </html>

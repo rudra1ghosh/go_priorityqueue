@@ -106,7 +106,7 @@ func CustomerWorkflow2(ctx workflow.Context, id int) error {
 		logger.Error("Activity failed.", zap.Error(err4))
 		return err4
 	}
-	currentState = "Workflow completed"
+	currentState = "Workflow Completed"
 	logger.Info("Workflow completed.", zap.String("Result", Result))
 
 	return nil
